@@ -4,28 +4,31 @@ import './App.css';
 function App() {
   const [players, setPlayers] = useState([]);
 
-  useEffect(() => {
-    fetchPlayers();
-  }, []);
-
-  const fetchPlayers = () => {
-    const response = fetch(`https://www.balldontlie.io/api/v1/players`);
-
-    setPlayers(response.data);
+  const fetchData = () => {
+    fetch('https://www.balldontlie.io/api/v1/players')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setPlayers(data);
+      });
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <div className='App'>
-      <ol>
-        {players &&
-          players.map((player) => {
-            return (
-              <li key={player.id}>
-                <h1>{player.first_name}</h1>
-              </li>
-            );
-          })}
-      </ol>
+    <div>
+      <h1>NBA</h1>
+      {players.length > 0 && (
+        <ul>
+          {players.map((player) => (
+            <li key={player.id}>{player}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
