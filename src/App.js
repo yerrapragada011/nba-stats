@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [players, setPlayers] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const fetchData = () => {
-    fetch('https://www.balldontlie.io/api/v1/players')
+    fetch('https://jsonplaceholder.typicode.com/todos')
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        setPlayers(data);
+        // console.log(data);
+        setUsers(data);
       });
   };
 
@@ -22,10 +22,15 @@ function App() {
   return (
     <div>
       <h1>NBA</h1>
-      {players.length > 0 && (
+      {users.length > 0 && (
         <ul>
-          {players.map((player) => (
-            <li key={player.id}>{player}</li>
+          {users.map((user, userId) => (
+            <div key={userId}>
+              <li>
+                {user.id + ' - '}
+                {user.title}
+              </li>
+            </div>
           ))}
         </ul>
       )}
